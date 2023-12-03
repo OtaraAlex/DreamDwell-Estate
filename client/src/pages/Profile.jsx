@@ -8,7 +8,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
-import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess } from "../redux/user/userSlice";
+import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserStart, deleteUserFailure, deleteUserSuccess, signOut } from "../redux/user/userSlice";
 import { set } from "mongoose";
 
 export default function Profile() {
@@ -92,6 +92,15 @@ export default function Profile() {
       dispatch(deleteUserFailure(error));
     }
   };
+
+  const handleSignOut = async () => {
+    try {
+      await fetch('/api/auth/signout');
+      dispatch(signOut());
+    } catch (error) {
+      console.log(error);
+    }
+  };
  
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -152,7 +161,7 @@ export default function Profile() {
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={handleDeleteAccount} className="text-red-700 cursor-pointer">Delete Account</span>
-        <span className="text-red-700 cursor-pointer">Sign out</span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign out</span>
       </div>
       <p className="text-red-700 mt-5">{error && "Somethng went wrong!"}</p>
       <p className="text-green-700 mt-5">{updateSuccess && "User is updated successfully!"}</p>
