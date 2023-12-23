@@ -306,7 +306,7 @@ export default function UpdateListing() {
               <div className='flex items-center gap-2'>
                 <input
                   type='number'
-                  id='discountPrice'
+                  id='discountedPrice'
                   min='0'
                   max='10000000'
                   required
